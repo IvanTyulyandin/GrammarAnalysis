@@ -32,7 +32,6 @@ public:
     void runAnalysis();
 
     void printResult(const std::string &outputFileName);
-
 private:
 
     grammarType grammar;

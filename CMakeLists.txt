@@ -3,5 +3,8 @@ project(GrammarAnalysis)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(matrixAnalysisRunner matrixAnalysis.cpp grammarAndAutomationReader.cpp matrixAnalysisRunner.cpp matrixAnalysis.h grammarAndAutomtionReader.h)
+set(SOURCES matrixAnalysis.cpp grammarAndAutomationReader.cpp)
+set(HEADERS matrixAnalysis.h grammarAndAutomtionReader.h)
+add_executable(matrixAnalysisRunner ${HEADERS} ${SOURCES} matrixAnalysisRunner.cpp)
+add_executable(matrixAnalysisTest ${HEADERS} ${SOURCES} matrixAnalysisTest.cpp)
 
