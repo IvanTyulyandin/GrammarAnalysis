@@ -1,0 +1,7 @@
+S : B T
+S : 3
+B : FB T
+B : F T
+FB : F B
+T : 3
+F : 4

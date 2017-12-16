@@ -1,0 +1,10 @@
+S : F STH
+STH : S TH
+S : T SO
+SO : S O
+S : F TH
+S : T O
+O : 1
+T : 2
+TH : 3
+F : 4
