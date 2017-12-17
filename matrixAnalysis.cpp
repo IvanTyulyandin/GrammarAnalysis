@@ -152,23 +152,22 @@ void MatrixAnalysis::runAnalysis()
     }
 }
 
+void MatrixAnalysis::printResult()
+{
+    for (int i = 0; i < numOfStates; i++)
+        for (int j = 0; j < numOfStates; j++)
+            for (auto &nonTerminal : matrix[i][j])
+                std::cout << i << "," << nonTerminal << "," << j << std::endl;
+}
+
 void MatrixAnalysis::printResult(const std::string &outputFileName)
 {
-    if (!outputFileName.empty())
-    {
-        std::ofstream outputFile(outputFileName, std::ofstream::out);
-        for (int i = 0; i < numOfStates; i++)
-            for (int j = 0; j < numOfStates; j++)
-                for (auto &nonTerminal : matrix[i][j]) {
-                    outputFile << i << "," << nonTerminal << "," << j << std::endl;
-                }
-    }
-    else
-    {
-        for (int i = 0; i < numOfStates; i++)
-            for (int j = 0; j < numOfStates; j++)
-                for (auto &nonTerminal : matrix[i][j]) {
-                    std::cout << i << "," << nonTerminal << "," << j << std::endl;
-                }
-    }
+
+    std::ofstream outputFile(outputFileName, std::ofstream::out);
+    for (int i = 0; i < numOfStates; i++)
+        for (int j = 0; j < numOfStates; j++)
+            for (auto &nonTerminal : matrix[i][j])
+                outputFile << i << "," << nonTerminal << "," << j << std::endl;
+    outputFile.close();
 }
+

@@ -9,7 +9,14 @@ int main(int argc, char* argv[])
 {
     auto matrixWorker = new MatrixAnalysis(argv[1], argv[2]);
     matrixWorker->runAnalysis();
-    std::cout << matrixWorker->countResult() << std::endl;
+    if (argc > 3)
+    {
+        matrixWorker->printResult(argv[3]);
+    }
+    else
+    {
+        matrixWorker->printResult();
+    }
     delete(matrixWorker);
 }
 

@@ -38,15 +38,19 @@ int main()
     {
         for (int j = 0; j < NUM_OF_TESTS; j ++)
         {
-            auto testMatrix = new MatrixAnalysis(test_grammars[i], testData[j]);
-            testMatrix->runAnalysis();
-            int res = testMatrix->countResult();
+            auto testMatrix = MatrixAnalysis(test_grammars[i], testData[j]);
+            std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
+            testMatrix.runAnalysis();
+            int res = testMatrix.countResult();
             if (res != correctAnswers[i][j])
             {
                 std::cout << "Test " + testData[j] + " on grammar " + test_grammars[i] + " failed! ";
                 std::cout << "Expected " << correctAnswers[i][j] << ", got " << res << std::endl;
             }
-            delete(testMatrix);
+            else
+            {
+                std::cout << "Test successfully passed" << std::endl;
+            }
         }
     }
 
