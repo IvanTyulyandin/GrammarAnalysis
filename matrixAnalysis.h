@@ -21,19 +21,19 @@ public:
     MatrixAnalysis(const std::string &grammarInput,
                    const std::string &automationInput);
 
-    void printGrammar();
+    void printGrammar() const;
 
-    void printAutomation();
+    void printAutomation() const;
 
-    void printMatrix();
+    void printMatrix() const;
 
-    int countResult();
+    int countResult() const;
 
     void runAnalysis();
 
-    void printResult(const std::string &outputFileName);
+    void printResult(const std::string &outputFileName) const;
 
-    void printResult();
+    void printResult() const;
 private:
 
     grammarType grammar;

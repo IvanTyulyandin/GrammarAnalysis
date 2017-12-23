@@ -13,7 +13,7 @@ MatrixAnalysis::MatrixAnalysis(const std::string &grammarInput,
                                                                           std::vector<std::string>(0)));
 }
 
-void MatrixAnalysis::printGrammar()
+void MatrixAnalysis::printGrammar() const
 {
     for (const auto &mapElem : grammar)
     {
@@ -29,7 +29,7 @@ void MatrixAnalysis::printGrammar()
     }
 }
 
-void MatrixAnalysis::printAutomation()
+void MatrixAnalysis::printAutomation() const
 {
     for (auto &iter : automation)
     {
@@ -42,7 +42,7 @@ void MatrixAnalysis::printAutomation()
     }
 }
 
-void MatrixAnalysis::printMatrix()
+void MatrixAnalysis::printMatrix() const
 {
     for (auto &row : matrix)
     {
@@ -101,7 +101,7 @@ static void addNotExistingNonTerminals(nonTerminalsType &matrixElem,
     }
 }
 
-int MatrixAnalysis::countResult()
+int MatrixAnalysis::countResult() const
 {
     int res = 0;
     for (auto &row : matrix)
@@ -152,7 +152,7 @@ void MatrixAnalysis::runAnalysis()
     }
 }
 
-void MatrixAnalysis::printResult()
+void MatrixAnalysis::printResult() const
 {
     for (int i = 0; i < numOfStates; i++)
         for (int j = 0; j < numOfStates; j++)
@@ -160,7 +160,7 @@ void MatrixAnalysis::printResult()
                 std::cout << i << "," << nonTerminal << "," << j << std::endl;
 }
 
-void MatrixAnalysis::printResult(const std::string &outputFileName)
+void MatrixAnalysis::printResult(const std::string &outputFileName) const
 {
 
     std::ofstream outputFile(outputFileName, std::ofstream::out);

@@ -27,22 +27,16 @@ void automationReader(const std::string &fileName, automationType &automation, u
     fileStream.open(fileName, std::fstream::in);
 
     std::string curString;
-    // skip 2 lines
-    // TODO: skip lines, that not accepted with regex ([0-9]+( ;))
+    std::regex statesInString ("[0-9]+");
+
     std::getline(fileStream, curString);
-    std::getline(fileStream, curString);
+    while (!std::regex_search(curString, statesInString))
+    {
+        std::getline(fileStream, curString);
+    }
 
     // dirty hack - count ';' instead of reading names
-    numOfStates = 0;
-    std::getline(fileStream, curString);
     numOfStates = split(curString, ';').size();
-//    for (auto &iter : curString)
-//    {
-//        if (iter == ';')
-//        {
-//            numOfStates ++;
-//        }
-//    }
 
     //regex for X -> Y[label="Z"]
     std::regex automationRule ("([0-9]+)"
