@@ -5,7 +5,7 @@
 #include <regex>
 #include <fstream>
 
-#include "grammarAndAutomtionReader.h"
+#include "grammarAndAutomationReader.h"
 
 static rightPartType split(std::string &s, char delim) {
     rightPartType result;

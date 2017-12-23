@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "matrixAnalysis.h"
-#include "grammarAndAutomtionReader.h"
+#include "grammarAndAutomationReader.h"
 
 MatrixAnalysis::MatrixAnalysis(const std::string &grammarInput,
                                const std::string &automationInput)
