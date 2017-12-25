@@ -3,12 +3,8 @@ project(GrammarAnalysis)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCES grammarAndAutomationReader.cpp)
-set(HEADERS grammarAndAutomationReader.h)
+add_subdirectory(include)
+add_subdirectory(matrixAnalysis)
+add_subdirectory(bottomUpAnalysis)
 
-set(MATRIX_SRC matrixAnalysis.h matrixAnalysis.cpp)
-set(BOTTOM_UP_SRC bottomUpAnalysisRunner.cpp)
-add_executable(matrixAnalysisRunner ${HEADERS} ${SOURCES} ${MATRIX_SRC} matrixAnalysisRunner.cpp)
-add_executable(matrixAnalysisTest ${HEADERS} ${SOURCES} ${MATRIX_SRC} matrixAnalysisTest.cpp)
-add_executable(bottomUpAnalysisRunner ${HEADERS} ${SOURCES} ${BOTTOM_UP_SRC})
 

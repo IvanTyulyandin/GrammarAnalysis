@@ -1,0 +1,4 @@
+cmake_minimum_required(VERSION 3.5)
+project(grammarAndAutomationReader)
+
+add_library(grammarAndAutomationReader grammarAndAutomationReader.h grammarAndAutomationReader.cpp)

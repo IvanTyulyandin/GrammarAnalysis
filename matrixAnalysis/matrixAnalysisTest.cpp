@@ -10,20 +10,20 @@
 int main()
 {
     constexpr int NUM_OF_TESTS = 11;
-    std::string test_grammars[NUM_OF_TESTS] = {"Q1.txt", "Q2.txt"};
+    std::string test_grammars[NUM_OF_TESTS] = {"../Q1.txt", "../Q2.txt"};
 
     constexpr int NUM_OF_GRAMMARS = 2;
-    std::string testData[NUM_OF_TESTS] = {"./data/atom-primitive.dot",
-                                          "./data/biomedical-measure-primitive.dot",
-                                          "./data/foaf.dot",
-                                          "./data/funding.dot",
-                                          "./data/generations.dot",
-                                          "./data/people-pets.dot",
-                                          "./data/pizza.dot",
-                                          "./data/skos.dot",
-                                          "./data/travel.dot",
-                                          "./data/univ-bench.dot",
-                                          "./data/wine.dot"};
+    std::string testData[NUM_OF_TESTS] = {"../data/atom-primitive.dot",
+                                          "../data/biomedical-measure-primitive.dot",
+                                          "../data/foaf.dot",
+                                          "../data/funding.dot",
+                                          "../data/generations.dot",
+                                          "../data/people-pets.dot",
+                                          "../data/pizza.dot",
+                                          "../data/skos.dot",
+                                          "../data/travel.dot",
+                                          "../data/univ-bench.dot",
+                                          "../data/wine.dot"};
 
     int correctAnswers[NUM_OF_TESTS][NUM_OF_TESTS] =
             {
