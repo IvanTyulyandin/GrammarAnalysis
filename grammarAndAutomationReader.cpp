@@ -29,11 +29,10 @@ void automationReader(const std::string &fileName, automationType &automation, u
     std::string curString;
     std::regex statesInString ("[0-9]+");
 
-    std::getline(fileStream, curString);
-    while (!std::regex_search(curString, statesInString))
+    do
     {
         std::getline(fileStream, curString);
-    }
+    } while (!std::regex_search(curString, statesInString));
 
     // dirty hack - count ';' instead of reading names
     numOfStates = split(curString, ';').size();
@@ -119,5 +118,137 @@ void grammarReader(const std::string &fileName, grammarType &grammar)
             (*iterForPlacement).second.push_back(rightPartVector);
         }
     }
+    fileStream.close();
+}
+
+void recursiveFiniteAutomationReader(const std::string &fileName,
+                                     automationType &automation,
+                                     unsigned long &numOfStates,
+                                     mapToSpecialStatesType &startStates,
+                                     mapToSpecialStatesType &finalStates)
+{
+    /*
+     * structure of input RFA
+     *
+     * some info
+     * line with state1; state2; ...
+     * some notes about start and final states for nonterminals
+     * rules for states
+     *
+     * why I don't reuse automation reader? bad architecture :(
+     */
+
+    std::ifstream fileStream;
+    fileStream.open(fileName, std::fstream::in);
+
+    std::string curString;
+    std::regex statesInString ("[0-9]+");
+
+    // parse string with states
+    do
+    {
+        std::getline(fileStream, curString);
+    } while (!std::regex_search(curString, statesInString));
+
+    // dirty hack - count ';' instead of reading names
+    numOfStates = split(curString, ';').size();
+
+    // parse start and final notes
+    std::regex stateDefinition ("([0-9]+)([[])");
+    std::smatch res;
+
+    while (!std::regex_search(curString, res, stateDefinition))
+    {
+        std::getline(fileStream, curString);
+    }
+
+    // now need to parse states, first one is in curString
+    std::regex ruleRegex ("(->)");
+    std::regex isStart ("(color=)");
+    std::regex isFinal ("(shape=)");
+    std::regex hasLabel ("(label=\")([^\"]+)");
+    std::regex numberInStateDefRegex ("([0-9]+)");
+
+    std::string label;
+    int numOfStateInDef;
+
+    while (!std::regex_search(curString, res, ruleRegex))
+    {
+        if (std::regex_search(curString, res, numberInStateDefRegex))
+        {
+            numOfStateInDef = std::stoi(res.str(1));
+        }
+        else
+        {
+            std::cout << "Incorrect format of state definition, expected X[label=\"Y\", ...], got "
+                      << curString
+                      << std::endl;
+            exit(1);
+        }
+
+        if (std::regex_search(curString, res, hasLabel))
+        {
+            label = res.str(2);
+            if (std::regex_search(curString, res, isStart))
+            {
+                specialStatesVector states = std::vector<int>(1, numOfStateInDef);
+                auto emplaceResult = startStates.emplace(label, states);
+                if (!std::get<1>(emplaceResult))
+                {
+                    auto iter = std::get<0>(emplaceResult);
+                    (*iter).second.push_back(numOfStateInDef);
+                }
+            }
+            if (std::regex_search(curString, res, isFinal))
+            {
+                specialStatesVector states = std::vector<int>(1, numOfStateInDef);
+                auto emplaceResult = finalStates.emplace(label, states);
+                if (!std::get<1>(emplaceResult))
+                {
+                    auto iter = std::get<0>(emplaceResult);
+                    (*iter).second.push_back(numOfStateInDef);
+                }
+            }
+        }
+        else
+        {
+            std::cout << "Expected label= in string " << curString << std::endl;
+        }
+
+        std::getline(fileStream, curString);
+    }
+
+    //regex for X -> Y[label="Z"]
+    std::regex automationRule ("([0-9]+)"
+                                       "( -> )"
+                                       "([0-9]+)"
+                                       "([^0-9]+\")"
+                                       "([^\"]*)"
+                                       "(\"])+");
+
+    std::regex closingBracket ("[}]+");
+
+    do
+    {
+        if (!std::regex_search(curString, closingBracket))
+        {
+            if (std::regex_search(curString, res, automationRule))
+            {
+                automation.emplace_back(std::make_tuple<int, int, const std::string>(
+                        std::stoi(res.str(1))
+                        , std::stoi(res.str(3))
+                        , res.str(5)));
+            }
+            else
+            {
+                std::cout << "Can't parse " << curString << " with regex ([0-9]+)( -> )([0-9]+)([^0-9]+\")[^\"]*)\"])+";
+                exit(1);
+            }
+        }
+        else
+        {
+            break;
+        }
+    } while (std::getline(fileStream, curString));
     fileStream.close();
 }
