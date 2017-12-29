@@ -4,40 +4,25 @@
 
 #include <iostream>
 #include "grammarAndAutomationReader.h"
-
-using specialStatesVector = std::vector<int>;
-using mapToSpecialStatesType = std::map<std::string, specialStatesVector>;
-
+#include "bottomUpAnalysis.h"
 
 int main(int argc, char* argv[])
 {
-    automationType automation;
-    mapToSpecialStatesType startStates;
-    mapToSpecialStatesType finalStates;
-    unsigned long numOfStates;
-
-    recursiveFiniteAutomationReader("Q1RFA.txt", automation, numOfStates, startStates, finalStates);
-
-    for (auto &vec : startStates)
+    if (argc < 3)
     {
-        std::cout << vec.first + ": ";
-        for (auto &j : vec.second)
-        {
-            std::cout << j << " ";
-        }
-        std::cout << std::endl;
+        std::cout << "Need two args - file with grammar and file with automation" << std::endl;
+        exit(1);
     }
-
-    for (auto &vec : finalStates)
+    auto bottomUpAnalysisWorker = new bottomUpAnalysis(argv[1], argv[2]);
+    bottomUpAnalysisWorker->runAnalysis();
+    if (argc > 3)
     {
-        std::cout << vec.first + ": ";
-        for (auto &j : vec.second)
-        {
-            std::cout << j << " ";
-        }
-        std::cout << std::endl;
+        bottomUpAnalysisWorker->printResult(argv[3]);
     }
-
-    std::cout << numOfStates << std::endl;
+    else
+    {
+        bottomUpAnalysisWorker->printResult();
+    }
+    delete(bottomUpAnalysisWorker);
 }
 

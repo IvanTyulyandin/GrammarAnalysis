@@ -124,8 +124,8 @@ void grammarReader(const std::string &fileName, grammarType &grammar)
 void recursiveFiniteAutomationReader(const std::string &fileName,
                                      automationType &automation,
                                      unsigned long &numOfStates,
-                                     mapToSpecialStatesType &startStates,
-                                     mapToSpecialStatesType &finalStates)
+                                     startStatesMap &startStates,
+                                     finalStatesMap &finalStates)
 {
     /*
      * structure of input RFA
@@ -135,7 +135,7 @@ void recursiveFiniteAutomationReader(const std::string &fileName,
      * some notes about start and final states for nonterminals
      * rules for states
      *
-     * why I don't reuse automation reader? bad architecture :(
+     * why I don't reuse automation reader? bad architecture ¯\_(ツ)_/¯
      */
 
     std::ifstream fileStream;
@@ -189,19 +189,22 @@ void recursiveFiniteAutomationReader(const std::string &fileName,
         if (std::regex_search(curString, res, hasLabel))
         {
             label = res.str(2);
+            // this map state -> nonterminal
             if (std::regex_search(curString, res, isStart))
             {
-                specialStatesVector states = std::vector<int>(1, numOfStateInDef);
-                auto emplaceResult = startStates.emplace(label, states);
+                auto states = std::vector<std::string>(1, label);
+                auto emplaceResult = startStates.emplace(numOfStateInDef, states);
                 if (!std::get<1>(emplaceResult))
                 {
                     auto iter = std::get<0>(emplaceResult);
-                    (*iter).second.push_back(numOfStateInDef);
+                    (*iter).second.push_back(label);
                 }
             }
+
+            // this map nonterminal -> state
             if (std::regex_search(curString, res, isFinal))
             {
-                specialStatesVector states = std::vector<int>(1, numOfStateInDef);
+                auto states = std::vector<int>(1, numOfStateInDef);
                 auto emplaceResult = finalStates.emplace(label, states);
                 if (!std::get<1>(emplaceResult))
                 {
@@ -213,6 +216,7 @@ void recursiveFiniteAutomationReader(const std::string &fileName,
         else
         {
             std::cout << "Expected label= in string " << curString << std::endl;
+            exit(1);
         }
 
         std::getline(fileStream, curString);

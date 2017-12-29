@@ -10,10 +10,16 @@
 #include <vector>
 
 using automationType = std::vector<std::tuple<int, int, const std::string>>;
-using specialStatesVector = std::vector<int>;
-using mapToSpecialStatesType = std::map<std::string, specialStatesVector>;
+using matrixType = std::vector<std::vector<bool>>;
 
-class bottomUpAnalysis {
+using startStatesMap = std::map<int, std::vector<std::string>>;
+using finalStatesMap = std::map<std::string, std::vector<int>>;
+
+using indexArrayType = std::vector<std::pair<int, int>>;
+
+class bottomUpAnalysis
+{
+public:
 
     bottomUpAnalysis(const std::string &RFAinput, const std::string &automationInput);
 
@@ -21,10 +27,31 @@ class bottomUpAnalysis {
 
     void printRFA() const;
 
+    void printMatrix() const;
+
+    void runAnalysis();
+
+    int countResult();
+
+    void printResult();
+
+    void printResult(const std::string& fileName);
+
+private:
+
     automationType automation;
+    unsigned long numOfStatesInAutomation;
+
     automationType RFA;
-    specialStatesVector startStates;
-    specialStatesVector final;
+    unsigned long numOfStatesInRFA;
+
+    startStatesMap startStatesRFA;
+    finalStatesMap finalStatesRFA;
+
+    matrixType matrix;
+    unsigned long matrixSize;
+
+    indexArrayType indexArray;
 };
 
 

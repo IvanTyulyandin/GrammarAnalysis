@@ -1,15 +1,15 @@
 //
-// Created by ivan on 17/12/17.
+// Created by ivan on 29/12/17.
 //
 
 #include <iostream>
 #include <chrono>
-#include "matrixAnalysis.h"
+#include "bottomUpAnalysis.h"
 
 int main()
 {
     constexpr int NUM_OF_TESTS = 11;
-    std::string test_grammars[NUM_OF_TESTS] = {"../Q1.txt", "../Q2.txt"};
+    std::string test_grammars[NUM_OF_TESTS] = {"../Q1RFA.txt", "../Q2RFA.txt"};
 
     constexpr int NUM_OF_GRAMMARS = 2;
     std::string testData[NUM_OF_TESTS] = {"../data/atom-primitive.dot",
@@ -37,7 +37,7 @@ int main()
     {
         for (int j = 0; j < NUM_OF_TESTS; j ++)
         {
-            auto testMatrix = MatrixAnalysis(test_grammars[i], testData[j]);
+            auto testMatrix = bottomUpAnalysis(test_grammars[i], testData[j]);
             std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
             testMatrix.runAnalysis();
             int res = testMatrix.countResult();
