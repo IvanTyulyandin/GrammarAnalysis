@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <chrono>
 #include "grammarAndAutomationReader.h"
 #include "bottomUpAnalysis.h"
 
@@ -13,6 +14,7 @@ int main(int argc, char* argv[])
         std::cout << "Need two args - file with grammar and file with automation" << std::endl;
         exit(1);
     }
+    auto start_time = std::chrono::steady_clock::now();
     auto bottomUpAnalysisWorker = new bottomUpAnalysis(argv[1], argv[2]);
     bottomUpAnalysisWorker->runAnalysis();
     if (argc > 3)
@@ -24,5 +26,9 @@ int main(int argc, char* argv[])
         bottomUpAnalysisWorker->printResult();
     }
     delete(bottomUpAnalysisWorker);
+
+    auto end_time = std::chrono::steady_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
+    std::cout << "Time: " << duration.count() << " sec\n";
 }
 

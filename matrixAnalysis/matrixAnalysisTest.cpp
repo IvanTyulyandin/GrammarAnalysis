@@ -32,6 +32,7 @@ int main()
 
 
     auto start_time = std::chrono::steady_clock::now();
+    int passedTestCount = 0;
 
     for (int i = 0; i < NUM_OF_GRAMMARS; i ++)
     {
@@ -49,13 +50,14 @@ int main()
             else
             {
                 std::cout << "Test successfully passed" << std::endl;
+                ++ passedTestCount;
             }
         }
     }
 
     auto end_time = std::chrono::steady_clock::now();
-    auto elapsed_ns = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
-    std::cout << "Time: " << elapsed_ns.count() << " sec\n";
-
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
+    std::cout << "Time: " << duration.count() << " sec\n";
+    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS << std::endl;
     return 0;
 }
