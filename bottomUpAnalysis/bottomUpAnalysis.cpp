@@ -122,30 +122,29 @@ void bottomUpAnalysis::runAnalysis()
 
             matrixWasChanged = false;
 
-            for (int i = 0; i < matrixSize; ++i)
+            for (auto &edge : newEdges)
             {
-                startDFA = indexArray[i].first;
-                startGrm = indexArray[i].second;
+                startDFA = std::get<0>(edge);
+                finalDFA = std::get<1>(edge);
 
-                for (int j = 0; j < matrixSize; ++j)
-                {
-                    finalDFA = indexArray[j].first;
-                    finalGrm = indexArray[j].second;
-
-                    for (auto &grmRule : RFA)
-                        if (std::get<0>(grmRule) == startGrm && std::get<1>(grmRule) == finalGrm)
-                            for (auto &ruleDFA : newEdges)
-                                if (std::get<0>(ruleDFA) == startDFA
-                                    && std::get<1>(ruleDFA) == finalDFA
-                                    && std::get<2>(ruleDFA) == std::get<2>(grmRule))
-                                {
-                                    if (!matrix[i][j])
-                                    {
-                                        matrixWasChanged = true;
-                                        matrix[i][j] = true;
-                                    }
-                                }
-                }
+                for (int i = 0; i < matrixSize; ++ i)
+                    if (startDFA == indexArray[i].first)
+                    {
+                        startGrm = indexArray[i].second;
+                        for (int j = 0; j < matrixSize; ++ j)
+                            if (finalDFA == indexArray[j].first)
+                            {
+                                finalGrm = indexArray[j].second;
+                                for (auto &grmRule : RFA)
+                                    if (std::get<0>(grmRule) == startGrm && std::get<1>(grmRule) == finalGrm)
+                                        if (std::get<2>(grmRule) == std::get<2>(edge))
+                                            if ( ! matrix[i][j])
+                                            {
+                                                matrixWasChanged = true;
+                                                matrix[i][j] = true;
+                                            }
+                            }
+                    }
             }
         }
 
