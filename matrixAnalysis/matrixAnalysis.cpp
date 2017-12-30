@@ -135,8 +135,8 @@ void MatrixAnalysis::runAnalysis()
     }
     // matrix init end
     // main part of algorithm
-    bool matrixChanged = true;
-    while (matrixChanged)
+    bool matrixChanged;
+    do
     {
         matrixChanged = false;
         for (auto i = 0; i < numOfStates; i ++)
@@ -146,10 +146,10 @@ void MatrixAnalysis::runAnalysis()
                         for (auto &kj : matrix[k][j])
                         {
                             nonTerminalsType leftParts = findExistingRulesInGrammar(grammar, ik, kj);
-                            // matrixChanged is passed by reference
+                            // matrixChanged is passed by reference and changed in this function
                             addNotExistingNonTerminals(matrix[i][j], leftParts, matrixChanged);
                         }
-    }
+    } while (matrixChanged);
 }
 
 void MatrixAnalysis::printResult() const

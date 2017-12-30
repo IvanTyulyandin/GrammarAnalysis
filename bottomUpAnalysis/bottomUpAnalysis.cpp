@@ -106,14 +106,15 @@ void bottomUpAnalysis::runAnalysis()
 
     automationType newEdges = automation;
 
-    bool needOneMoreStep = true;
+    bool needOneMoreStep;
     do
     {
         needOneMoreStep = false;
+
         // stage 1: add info about RFA and DFA to matrix
 
-        bool matrixWasChanged = true;
-        while (matrixWasChanged)
+        bool matrixWasChanged;
+        do
         {
             int startDFA = 0;
             int startGrm = 0;
@@ -146,25 +147,25 @@ void bottomUpAnalysis::runAnalysis()
                             }
                     }
             }
-        }
+        } while (matrixWasChanged);
 
         // stage 2: closure
 
         for (int k = 0; k < matrixSize; ++k)
         {
             std::vector<bool> &matrixK = matrix[k];
-            for (int i = 0; i < matrixSize; ++i)
+            for (int i = 0; i < matrixSize; ++ i)
             {
                 std::vector<bool> &matrixI = matrix[i];
-                for (int j = 0; j < matrixSize; ++j)
-                {
-                    if (matrixI[k] && matrixK[j]) {
-                        matrixI[j] = true;
-                    }
-                }
+                if (matrixI[k])
+                    for (int j = 0; j < matrixSize; ++ j)
+                        if (matrixK[j])
+                            matrixI[j] = true;
             }
         }
+
         // stage 3: add new edges to automation
+
         newEdges = std::vector<std::tuple<int, int, const std::string>>(0);
         for (int i = 0; i < matrixSize; ++i)
         {
