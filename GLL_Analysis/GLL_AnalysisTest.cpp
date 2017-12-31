@@ -34,10 +34,10 @@ int main() {
 
     for (int i = 0; i < NUM_OF_GRAMMARS; i++) {
         for (int j = 0; j < NUM_OF_TESTS; j++) {
-            auto testMatrix = GLL_Analysis(test_grammars[i], testData[j]);
+            auto gll_analysisWorker = GLL_Analysis(test_grammars[i], testData[j]);
             std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
-            testMatrix.runAnalysis();
-            int res = testMatrix.countResult();
+            gll_analysisWorker.runAnalysis();
+            int res = gll_analysisWorker.countResult();
             if (res != correctAnswers[i][j]) {
                 std::cout << "Test " + testData[j] + " on grammar " + test_grammars[i] + " failed! ";
                 std::cout << "Expected " << correctAnswers[i][j] << ", got " << res << std::endl;
@@ -48,9 +48,21 @@ int main() {
         }
     }
 
+    auto GLL_AnalysisWorker = GLL_Analysis("../myTestRFA1.txt", "../myTestDFA1.txt");
+    GLL_AnalysisWorker.runAnalysis();
+    if (GLL_AnalysisWorker.countResult() == 12)
+    {
+        std::cout << "Additional test on grammar ../myTest1RFA.txt and DFA ../myTestDFA1.txt passed" << std::endl;
+        ++ passedTestCount;
+    }
+    else
+    {
+        std::cout << "Additional test on grammar ../myTest1RFA.txt and DFA ../myTestDFA1.txt failed!";
+    }
+    
     auto end_time = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
     std::cout << "Time: " << duration.count() << " sec\n";
-    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS << std::endl;
+    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS + 1 << std::endl;
     return 0;
 }

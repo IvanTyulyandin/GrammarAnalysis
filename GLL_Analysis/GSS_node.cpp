@@ -42,6 +42,11 @@ std::vector<config> GSS_node::pop(int curPosInDFA)
         result.emplace_back(config(curPosInDFA, std::get<0>(edge), std::get<1>(edge)));
     }
     wasPopped = true;
+    for (auto &finalPos : whereWasPopped)
+    {
+        if (finalPos == curPosInDFA)
+            return result;
+    }
     whereWasPopped.push_back(curPosInDFA);
 
     return result;

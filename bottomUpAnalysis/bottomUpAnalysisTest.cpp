@@ -38,10 +38,10 @@ int main()
     {
         for (int j = 0; j < NUM_OF_TESTS; j ++)
         {
-            auto testMatrix = bottomUpAnalysis(test_grammars[i], testData[j]);
+            auto bottomUpAnalysisWorker = bottomUpAnalysis(test_grammars[i], testData[j]);
             std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
-            testMatrix.runAnalysis();
-            int res = testMatrix.countResult();
+            bottomUpAnalysisWorker.runAnalysis();
+            int res = bottomUpAnalysisWorker.countResult();
             if (res != correctAnswers[i][j])
             {
                 std::cout << "Test " + testData[j] + " on grammar " + test_grammars[i] + " failed! ";
@@ -55,9 +55,21 @@ int main()
         }
     }
 
+    // additional test
+    auto bottomUpAnalysisWorker = bottomUpAnalysis("../myTestRFA1.txt", "../myTestDFA1.txt");
+    bottomUpAnalysisWorker.runAnalysis();
+    if (bottomUpAnalysisWorker.countResult() == 12)
+    {
+        std::cout << "Additional test on grammar ../myTest1RFA.txt and DFA ../myTestDFA1.txt passed" << std::endl;
+        ++ passedTestCount;
+    }
+    else
+    {
+        std::cout << "Additional test on grammar ../myTest1RFA.txt and DFA ../myTestDFA1.txt failed!";
+    }
     auto end_time = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
     std::cout << "Time: " << duration.count() << " sec\n";
-    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS << std::endl;
+    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS + 1<< std::endl;
     return 0;
 }

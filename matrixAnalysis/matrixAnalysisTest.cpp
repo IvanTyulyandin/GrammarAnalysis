@@ -55,9 +55,21 @@ int main()
         }
     }
 
+    auto testMatrix = MatrixAnalysis("../myTest1.txt", "../myTestDFA1.txt");
+    testMatrix.runAnalysis();
+    if (testMatrix.countResult() == 12)
+    {
+        std::cout << "Additional test on grammar ../myTest1.txt and DFA ../myTestDFA1.txt passed" << std::endl;
+        ++ passedTestCount;
+    }
+    else
+    {
+        std::cout << "Additional test on grammar ../myTest1.txt and DFA ../myTestDFA1.txt failed!";
+    }
+
     auto end_time = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
     std::cout << "Time: " << duration.count() << " sec\n";
-    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS << std::endl;
+    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS  + 1 << std::endl;
     return 0;
 }
