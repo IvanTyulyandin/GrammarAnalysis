@@ -6,5 +6,6 @@ set(CMAKE_CXX_STANDARD 11)
 add_subdirectory(include)
 add_subdirectory(matrixAnalysis)
 add_subdirectory(bottomUpAnalysis)
+add_subdirectory(GLL_Analysis)
 
 
