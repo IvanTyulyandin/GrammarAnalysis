@@ -58,7 +58,7 @@ int main()
     // additional test
     auto bottomUpAnalysisWorker = bottomUpAnalysis("../myTestRFA1.txt", "../myTestDFA1.txt");
     bottomUpAnalysisWorker.runAnalysis();
-    if (bottomUpAnalysisWorker.countResult() == 12)
+    if (bottomUpAnalysisWorker.countResult() == 16)
     {
         std::cout << "Additional test on grammar ../myTest1RFA.txt and DFA ../myTestDFA1.txt passed" << std::endl;
         ++ passedTestCount;

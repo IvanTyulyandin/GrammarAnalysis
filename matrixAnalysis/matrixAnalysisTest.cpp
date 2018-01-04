@@ -57,7 +57,7 @@ int main()
 
     auto testMatrix = MatrixAnalysis("../myTest1.txt", "../myTestDFA1.txt");
     testMatrix.runAnalysis();
-    if (testMatrix.countResult() == 12)
+    if (testMatrix.countResult() == 16)
     {
         std::cout << "Additional test on grammar ../myTest1.txt and DFA ../myTestDFA1.txt passed" << std::endl;
         ++ passedTestCount;

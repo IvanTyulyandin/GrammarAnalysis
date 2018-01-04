@@ -50,7 +50,7 @@ int main() {
 
     auto GLL_AnalysisWorker = GLL_Analysis("../myTestRFA1.txt", "../myTestDFA1.txt");
     GLL_AnalysisWorker.runAnalysis();
-    if (GLL_AnalysisWorker.countResult() == 12)
+    if (GLL_AnalysisWorker.countResult() == 16)
     {
         std::cout << "Additional test on grammar ../myTest1RFA.txt and DFA ../myTestDFA1.txt passed" << std::endl;
         ++ passedTestCount;
