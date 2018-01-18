@@ -116,6 +116,23 @@ int MatrixAnalysis::countResult() const
     return res;
 }
 
+void MatrixAnalysis::findAndSetNonTermsWithEps()
+{
+    for (auto &rule : grammar)
+    {
+        for (auto &rightParts : rule.second)
+        {
+            for (auto &symbol : rightParts)
+            {
+                if (symbol == "eps")
+                {
+                    nonTermsWithEps.push_back(rule.first);
+                }
+            }
+        }
+    }
+}
+
 void MatrixAnalysis::runAnalysis()
 {
     // matrix init
@@ -123,16 +140,28 @@ void MatrixAnalysis::runAnalysis()
     {
         // should push_back cos may be 2 or more ways
         const auto &terminal = std::get<2>(i);
+        int row = std::get<0>(i);
+        int col = std::get<1>(i);
         for (auto &rule : grammar)
             for (auto &right : rule.second)
                 for (auto &partOfRule : right)
                 {
                     if (terminal == partOfRule) // we have ChNF
                     {
-                        matrix[std::get<0>(i)][std::get<1>(i)].push_back(rule.first);
+                        matrix[row][col].push_back(rule.first);
                     }
                 }
     }
+
+    findAndSetNonTermsWithEps();
+    for (auto &nonTerm : nonTermsWithEps)
+    {
+        for (int i = 0; i < numOfStates; ++ i)
+        {
+            matrix[i][i].push_back(nonTerm);
+        }
+    }
+
     // matrix init end
     // main part of algorithm
     bool matrixChanged;

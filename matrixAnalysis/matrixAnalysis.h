@@ -36,10 +36,13 @@ public:
     void printResult() const;
 private:
 
+    nonTerminalsType nonTermsWithEps;
     grammarType grammar;
     automationType automation;
     unsigned long numOfStates;
     matrixType matrix;
+
+    void findAndSetNonTermsWithEps();
 };
 
 #endif //GRAMMARANALYSIS_MATRIXANALYSIS_H
