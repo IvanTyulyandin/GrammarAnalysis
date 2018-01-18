@@ -17,11 +17,11 @@ using finalStatesMap = std::map<std::string, std::vector<int>>;
 
 using indexArrayType = std::vector<std::pair<int, int>>;
 
-class bottomUpAnalysis
+class BottomUpAnalysis
 {
 public:
 
-    bottomUpAnalysis(const std::string &RFAinput, const std::string &automationInput);
+    BottomUpAnalysis(const std::string &RFAinput, const std::string &automationInput);
 
     void printAutomation() const;
 

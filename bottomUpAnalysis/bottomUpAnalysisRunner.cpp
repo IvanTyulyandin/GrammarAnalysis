@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
     auto start_time = std::chrono::steady_clock::now();
-    auto bottomUpAnalysisWorker = new bottomUpAnalysis(argv[1], argv[2]);
+    auto bottomUpAnalysisWorker = new BottomUpAnalysis(argv[1], argv[2]);
     bottomUpAnalysisWorker->runAnalysis();
     if (argc > 3)
     {

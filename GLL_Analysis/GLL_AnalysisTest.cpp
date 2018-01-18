@@ -34,7 +34,7 @@ int main() {
 
     for (int i = 0; i < NUM_OF_GRAMMARS; i++) {
         for (int j = 0; j < NUM_OF_TESTS; j++) {
-            auto gll_analysisWorker = GLL_Analysis(test_grammars[i], testData[j]);
+            GLL_Analysis gll_analysisWorker(test_grammars[i], testData[j]);
             std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
             gll_analysisWorker.runAnalysis();
             int res = gll_analysisWorker.countResult();
@@ -48,7 +48,7 @@ int main() {
         }
     }
 
-    auto GLL_AnalysisWorker = GLL_Analysis("../testRFA/myTestRFA1.txt", "../testDFA/myTestDFA1.txt");
+    GLL_Analysis GLL_AnalysisWorker("../testRFA/myTestRFA1.txt", "../testDFA/myTestDFA1.txt");
     GLL_AnalysisWorker.runAnalysis();
     if (GLL_AnalysisWorker.countResult() == 16)
     {

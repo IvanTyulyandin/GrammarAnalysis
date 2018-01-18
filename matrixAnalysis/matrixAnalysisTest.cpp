@@ -38,7 +38,7 @@ int main()
     {
         for (int j = 0; j < NUM_OF_TESTS; j ++)
         {
-            auto testMatrix = MatrixAnalysis(test_grammars[i], testData[j]);
+            MatrixAnalysis testMatrix(test_grammars[i], testData[j]);
             std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
             testMatrix.runAnalysis();
             int res = testMatrix.countResult();
@@ -55,7 +55,7 @@ int main()
         }
     }
 
-    auto testMatrix = MatrixAnalysis("../testGrammars/myTest1.txt", "../testDFA/myTestDFA1.txt");
+    MatrixAnalysis testMatrix("../testGrammars/myTest1.txt", "../testDFA/myTestDFA1.txt");
     testMatrix.runAnalysis();
     if (testMatrix.countResult() == 16)
     {

@@ -38,7 +38,7 @@ int main()
     {
         for (int j = 0; j < NUM_OF_TESTS; j ++)
         {
-            auto bottomUpAnalysisWorker = bottomUpAnalysis(test_grammars[i], testData[j]);
+            BottomUpAnalysis bottomUpAnalysisWorker(test_grammars[i], testData[j]);
             std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
             bottomUpAnalysisWorker.runAnalysis();
             int res = bottomUpAnalysisWorker.countResult();
@@ -56,7 +56,7 @@ int main()
     }
 
     // additional test
-    auto bottomUpAnalysisWorker = bottomUpAnalysis("../testRFA/myTestRFA1.txt", "../testDFA/myTestDFA1.txt");
+    BottomUpAnalysis bottomUpAnalysisWorker("../testRFA/myTestRFA1.txt", "../testDFA/myTestDFA1.txt");
     bottomUpAnalysisWorker.runAnalysis();
     if (bottomUpAnalysisWorker.countResult() == 16)
     {
@@ -72,6 +72,6 @@ int main()
     auto end_time = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
     std::cout << "Time: " << duration.count() << " sec\n";
-    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS + 1<< std::endl;
+    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS + 1 << std::endl;
     return 0;
 }

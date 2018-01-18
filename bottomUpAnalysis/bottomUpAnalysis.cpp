@@ -7,7 +7,7 @@
 #include "bottomUpAnalysis.h"
 #include "grammarAndAutomationReader.h"
 
-bottomUpAnalysis::bottomUpAnalysis(const std::string &RFAinput, const std::string &automationInput)
+BottomUpAnalysis::BottomUpAnalysis(const std::string &RFAinput, const std::string &automationInput)
 {
     recursiveFiniteAutomationReader(RFAinput, RFA, numOfStatesInRFA, startStatesRFA, finalStatesRFA);
 
@@ -26,7 +26,7 @@ bottomUpAnalysis::bottomUpAnalysis(const std::string &RFAinput, const std::strin
     }
 }
 
-void bottomUpAnalysis::printAutomation() const
+void BottomUpAnalysis::printAutomation() const
 {
     for (auto &iter : automation)
     {
@@ -39,7 +39,7 @@ void bottomUpAnalysis::printAutomation() const
     }
 }
 
-void bottomUpAnalysis::printRFA() const
+void BottomUpAnalysis::printRFA() const
 {
     std::cout << "Start states for nonterminals:" << std::endl;
     for (auto &iter : startStatesRFA)
@@ -74,7 +74,7 @@ void bottomUpAnalysis::printRFA() const
     }
 }
 
-void bottomUpAnalysis::printMatrix() const
+void BottomUpAnalysis::printMatrix() const
 {
     for (int i = 0; i < matrixSize; ++ i)
     {
@@ -90,7 +90,7 @@ void bottomUpAnalysis::printMatrix() const
 }
 
 
-void bottomUpAnalysis::runAnalysis()
+void BottomUpAnalysis::runAnalysis()
 {
     auto checkExistInDFA = [](const automationType &automation, int i, int j, const std::string &symbol) -> bool
     {
@@ -193,7 +193,7 @@ void bottomUpAnalysis::runAnalysis()
     } while (needOneMoreStep);
 }
 
-int bottomUpAnalysis::countResult()
+int BottomUpAnalysis::countResult()
 {
     int result = 0;
     for (auto & ruleDFA : automation)
@@ -204,7 +204,7 @@ int bottomUpAnalysis::countResult()
     return result;
 }
 
-void bottomUpAnalysis::printResult()
+void BottomUpAnalysis::printResult()
 {
     for (auto & rule : automation)
     {
@@ -216,7 +216,7 @@ void bottomUpAnalysis::printResult()
     }
 }
 
-void bottomUpAnalysis::printResult(const std::string& fileName)
+void BottomUpAnalysis::printResult(const std::string& fileName)
 {
     std::ofstream outputFile(fileName, std::ofstream::out);
 
