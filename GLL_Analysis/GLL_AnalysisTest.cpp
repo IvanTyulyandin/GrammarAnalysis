@@ -7,7 +7,7 @@
 
 int main() {
     constexpr int NUM_OF_TESTS = 11;
-    std::string test_grammars[NUM_OF_TESTS] = {"../Q1RFA.txt", "../Q2RFA.txt"};
+    std::string test_grammars[NUM_OF_TESTS] = {"../testRFA/Q1RFA.txt", "../testRFA/Q2RFA.txt"};
 
     constexpr int NUM_OF_GRAMMARS = 2;
     std::string testData[NUM_OF_TESTS] = {"../data/atom-primitive.dot",
@@ -48,7 +48,7 @@ int main() {
         }
     }
 
-    auto GLL_AnalysisWorker = GLL_Analysis("../myTestRFA1.txt", "../myTestDFA1.txt");
+    auto GLL_AnalysisWorker = GLL_Analysis("../testRFA/myTestRFA1.txt", "../testDFA/myTestDFA1.txt");
     GLL_AnalysisWorker.runAnalysis();
     if (GLL_AnalysisWorker.countResult() == 16)
     {

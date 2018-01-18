@@ -9,7 +9,7 @@
 int main()
 {
     constexpr int NUM_OF_TESTS = 11;
-    std::string test_grammars[NUM_OF_TESTS] = {"../Q1.txt", "../Q2.txt"};
+    std::string test_grammars[NUM_OF_TESTS] = {"../testGrammars/Q1.txt", "../testGrammars/Q2.txt"};
 
     constexpr int NUM_OF_GRAMMARS = 2;
     std::string testData[NUM_OF_TESTS] = {"../data/atom-primitive.dot",
@@ -55,7 +55,7 @@ int main()
         }
     }
 
-    auto testMatrix = MatrixAnalysis("../myTest1.txt", "../myTestDFA1.txt");
+    auto testMatrix = MatrixAnalysis("../testGrammars/myTest1.txt", "../testDFA/myTestDFA1.txt");
     testMatrix.runAnalysis();
     if (testMatrix.countResult() == 16)
     {

@@ -9,7 +9,7 @@
 int main()
 {
     constexpr int NUM_OF_TESTS = 11;
-    std::string test_grammars[NUM_OF_TESTS] = {"../Q1RFA.txt", "../Q2RFA.txt"};
+    std::string test_grammars[NUM_OF_TESTS] = {"../testRFA/Q1RFA.txt", "../testRFA/Q2RFA.txt"};
 
     constexpr int NUM_OF_GRAMMARS = 2;
     std::string testData[NUM_OF_TESTS] = {"../data/atom-primitive.dot",
@@ -56,16 +56,18 @@ int main()
     }
 
     // additional test
-    auto bottomUpAnalysisWorker = bottomUpAnalysis("../myTestRFA1.txt", "../myTestDFA1.txt");
+    auto bottomUpAnalysisWorker = bottomUpAnalysis("../testRFA/myTestRFA1.txt", "../testDFA/myTestDFA1.txt");
     bottomUpAnalysisWorker.runAnalysis();
     if (bottomUpAnalysisWorker.countResult() == 16)
     {
-        std::cout << "Additional test on grammar ../myTest1RFA.txt and DFA ../myTestDFA1.txt passed" << std::endl;
+        std::cout << "Additional test on grammar ../testRFA/myTest1RFA.txt and DFA ../testDFA/myTestDFA1.txt passed"
+                  << std::endl;
         ++ passedTestCount;
     }
     else
     {
-        std::cout << "Additional test on grammar ../myTest1RFA.txt and DFA ../myTestDFA1.txt failed!";
+        std::cout << "Additional test on grammar ../testRFA/myTest1RFA.txt and DFA ../testDFA/myTestDFA1.txt failed!"
+                  << std::endl;
     }
     auto end_time = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);

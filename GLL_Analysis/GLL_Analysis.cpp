@@ -246,10 +246,10 @@ void GLL_Analysis::printResult() const
         if (gss_node.wasPopped)
         {
             for (auto &finalPos : gss_node.whereWasPopped)
-                std::cout << "(" << gss_node.posInDFA
+                std::cout  << gss_node.posInDFA
                            << "," << gss_node.nonTerm
                            << "," << finalPos
-                           << ")" << std::endl;
+                           << std::endl;
         }
     }
 }

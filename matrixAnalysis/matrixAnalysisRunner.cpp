@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
     {
         matrixWorker->printResult();
     }
+    std::cout << "Count result = " << matrixWorker->countResult() << std::endl;
     delete(matrixWorker);
 
     auto end_time = std::chrono::steady_clock::now();

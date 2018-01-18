@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     if (argc < 3)
     {
-        std::cout << "Need two args - file with grammar and file with automation" << std::endl;
+        std::cout << "Need two args - file with grammar(RFA) and file with automation" << std::endl;
         exit(1);
     }
     auto start_time = std::chrono::steady_clock::now();
@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     {
         GLLAnalysisWorker->printResult();
     }
+    std::cout << "Count result = " << GLLAnalysisWorker->countResult() << std::endl;
     delete(GLLAnalysisWorker);
 
     auto end_time = std::chrono::steady_clock::now();

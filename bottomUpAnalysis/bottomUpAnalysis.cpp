@@ -223,7 +223,7 @@ void bottomUpAnalysis::printResult(const std::string& fileName)
     for (auto & rule : automation)
     {
         const auto & symbol = std::get<2>(rule);
-        if ((symbol.length() != 1 && symbol != "eps") || ! islower(symbol[0]) )
+        if ((symbol.length() != 1 && symbol != "eps") || (! islower(symbol[0]) && ! isdigit(symbol[0])))
         {
             outputFile << std::get<0>(rule) << ',' << symbol << ',' << std::get<1>(rule) << std::endl;
         }
