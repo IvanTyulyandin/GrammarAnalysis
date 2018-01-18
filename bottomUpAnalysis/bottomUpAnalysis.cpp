@@ -106,6 +106,31 @@ void BottomUpAnalysis::runAnalysis()
 
     automationType newEdges = automation;
 
+    // add edges to automation, if nonterminal start == end
+    for (auto &startStates : startStatesRFA)
+    {
+        for (auto &nonTerm : startStates.second)
+        {
+            auto finalStatesIter = finalStatesRFA.find(nonTerm);
+            if (finalStatesIter == finalStatesRFA.end())
+            {
+                std::cout << "No final state in RFA for nonterminal " << nonTerm << std::endl;
+                exit(1);
+            }
+
+            for (auto &final : (*finalStatesIter).second)
+            {
+                if (startStates.first == final)
+                {
+                    for (int i = 0; i < numOfStatesInAutomation; ++ i)
+                    {
+                        automation.emplace_back(std::make_tuple(i, i, nonTerm));
+                    }
+                }
+            }
+        }
+    }
+
     bool needOneMoreStep;
     do
     {
@@ -123,7 +148,7 @@ void BottomUpAnalysis::runAnalysis()
 
             matrixWasChanged = false;
 
-            for (auto &edge : newEdges)
+            for (auto &edge : newEdges) // newEdges == automation at first iteration
             {
                 startDFA = std::get<0>(edge);
                 finalDFA = std::get<1>(edge);
@@ -151,7 +176,7 @@ void BottomUpAnalysis::runAnalysis()
 
         // stage 2: closure
 
-        for (int k = 0; k < matrixSize; ++k)
+        for (int k = 0; k < matrixSize; ++ k)
         {
             std::vector<bool> &matrixK = matrix[k];
             for (int i = 0; i < matrixSize; ++ i)
@@ -167,7 +192,8 @@ void BottomUpAnalysis::runAnalysis()
         // stage 3: add new edges to automation
 
         newEdges = std::vector<std::tuple<int, int, const std::string>>(0);
-        for (int i = 0; i < matrixSize; ++i)
+
+        for (int i = 0; i < matrixSize; ++ i)
         {
             int startPos = indexArray[i].second;
             auto nonTerms = startStatesRFA.find(startPos);
@@ -176,7 +202,7 @@ void BottomUpAnalysis::runAnalysis()
                 {
                     auto finalPositions = (*finalStatesRFA.find(nonTerminal)).second;
                     for (auto finalPos : finalPositions)
-                        for (int j = 0; j < matrixSize; ++j)
+                        for (int j = 0; j < matrixSize; ++ j)
                             if (matrix[i][j] && indexArray[j].second == finalPos)
                             {
                                 int startDFA = indexArray[i].first;

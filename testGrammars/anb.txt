@@ -1,0 +1,4 @@
+S : T C
+T : a
+T : T T
+C : b
