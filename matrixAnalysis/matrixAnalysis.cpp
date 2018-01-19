@@ -75,25 +75,27 @@ static nonTerminalsType findExistingRulesInGrammar(const grammarType &grammar,
     return result;
 }
 
+
+static bool areExistInMatrixElem(const nonTerminalsType &matrixElem, const std::string &wanted)
+{
+    for (auto &nonTerminal : matrixElem)
+    {
+        if (nonTerminal == wanted)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 static void addNotExistingNonTerminals(nonTerminalsType &matrixElem,
                                                 const nonTerminalsType &toAdd,
                                                 bool &wasAdded)
 {
-    auto areExistInMatrixElem = [&matrixElem](std::string wanted) -> bool
-    {
-        for (auto &nonTerminal : matrixElem)
-        {
-            if (nonTerminal == wanted)
-            {
-                return true;
-            }
-        }
-        return false;
-    };
 
     for (auto &nonTerminal : toAdd)
     {
-        if (!areExistInMatrixElem(nonTerminal))
+        if (!areExistInMatrixElem(matrixElem, nonTerminal))
         {
             matrixElem.push_back(nonTerminal);
             wasAdded = true;
@@ -158,7 +160,10 @@ void MatrixAnalysis::runAnalysis()
     {
         for (int i = 0; i < numOfStates; ++ i)
         {
-            matrix[i][i].push_back(nonTerm);
+            if (! areExistInMatrixElem(matrix[i][i], nonTerm))
+            {
+                matrix[i][i].push_back(nonTerm);
+            }
         }
     }
 

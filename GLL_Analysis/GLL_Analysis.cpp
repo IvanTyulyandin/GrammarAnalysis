@@ -229,10 +229,10 @@ void GLL_Analysis::printResult(const std::string& fileName) const
         if (gss_node.wasPopped)
         {
             for (auto &finalPos : gss_node.whereWasPopped)
-                outputFile << "(" << gss_node.posInDFA
+                outputFile << gss_node.posInDFA
                            << "," << gss_node.nonTerm
                            << "," << finalPos
-                           << ")" << std::endl;
+                           << std::endl;
         }
     }
 

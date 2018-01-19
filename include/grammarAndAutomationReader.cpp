@@ -26,6 +26,12 @@ void automationReader(const std::string &fileName, automationType &automation, u
     std::ifstream fileStream;
     fileStream.open(fileName, std::fstream::in);
 
+    if (fileStream.fail())
+    {
+        std::cout << "Can't open file " << fileName << std::endl;
+        exit(1);
+    }
+
     std::string curString;
     std::regex statesInString ("[0-9]+");
 
@@ -50,6 +56,11 @@ void automationReader(const std::string &fileName, automationType &automation, u
 
     while (std::getline(fileStream, curString))
     {
+        if (curString.empty())
+        {
+            continue;
+        }
+
         if (!std::regex_search(curString, closingBracket))
         {
             if (std::regex_search(curString, res, automationRule))
@@ -80,17 +91,28 @@ void grammarReader(const std::string &fileName, grammarType &grammar)
     std::ifstream fileStream;
     fileStream.open(fileName, std::fstream::in);
 
+    if (fileStream.fail())
+    {
+        std::cout << "Can't open file " << fileName << std::endl;
+        exit(1);
+    }
+
     std::string curString;
     std::string leftPart;
     std::string rightPart;
 
     std::regex grammarRule ("([A-z0-9]+)"
                                     "( : )"
-                                    "([A-z0-9 ]+)");
+                                    "([A-z0-9+*() ]+)");
     std::smatch res;
 
     while (std::getline(fileStream, curString))
     {
+        if (curString.empty())
+        {
+            continue;
+        }
+
         if (std::regex_search(curString, res, grammarRule))
         {
             leftPart = res.str(1);
@@ -98,7 +120,7 @@ void grammarReader(const std::string &fileName, grammarType &grammar)
         }
         else
         {
-            std::cout << "Can't parse " << curString << " with regex ([A-z0-9]+)( : )([A-z0-9]+)";
+            std::cout << "Can't parse " << curString << " with regex ([A-z0-9]+)( : )([A-z0-9+*() ]+)";
             exit(1);
         }
         //adding to grammar
@@ -141,6 +163,11 @@ void recursiveFiniteAutomationReader(const std::string &fileName,
     std::ifstream fileStream;
     fileStream.open(fileName, std::fstream::in);
 
+    if (fileStream.fail())
+    {
+        std::cout << "Can't open file " << fileName << std::endl;
+        exit(1);
+    }
     std::string curString;
     std::regex statesInString ("[0-9]+");
 
@@ -174,6 +201,11 @@ void recursiveFiniteAutomationReader(const std::string &fileName,
 
     while (!std::regex_search(curString, res, ruleRegex))
     {
+        if (curString.empty())
+        {
+            continue;
+        }
+
         if (std::regex_search(curString, res, numberInStateDefRegex))
         {
             numOfStateInDef = std::stoi(res.str(1));

@@ -46,6 +46,7 @@ int main()
             {
                 std::cout << "Test " + testData[j] + " on grammar " + test_grammars[i] + " failed! ";
                 std::cout << "Expected " << correctAnswers[i][j] << ", got " << res << std::endl;
+                exit(1);
             }
             else
             {
@@ -55,21 +56,45 @@ int main()
         }
     }
 
-    MatrixAnalysis testMatrix("../testGrammars/myTest1.txt", "../testDFA/myTestDFA1.txt");
-    testMatrix.runAnalysis();
-    if (testMatrix.countResult() == 16)
+    // additional tests
+
+    auto additionalTests = std::vector<std::pair<std::string, std::string>>();
+    additionalTests.emplace_back(std::make_pair("../testGrammars/1.txt", "../testDFA/DFA1.txt"));
+    additionalTests.emplace_back(std::make_pair("../testGrammars/2.txt", "../testDFA/DFA2.txt"));
+    additionalTests.emplace_back(std::make_pair("../testGrammars/3.txt", "../testDFA/DFA3.txt"));
+    additionalTests.emplace_back(std::make_pair("../testGrammars/4.txt", "../testDFA/DFA4.txt"));
+    additionalTests.emplace_back(std::make_pair("../testGrammars/5.txt", "../testDFA/DFA5.txt"));
+
+    constexpr int correctAnswersAdditional[] = {16, 20, 1, 9, 6};
+
+    int curTest = 0;
+    for (auto &test : additionalTests)
     {
-        std::cout << "Additional test on grammar ../myTest1.txt and DFA ../myTestDFA1.txt passed" << std::endl;
-        ++ passedTestCount;
-    }
-    else
-    {
-        std::cout << "Additional test on grammar ../myTest1.txt and DFA ../myTestDFA1.txt failed!";
+        std::cout << test.first << test.second << std::endl;
+
+        MatrixAnalysis matrixAnalysisWorker(test.first, test.second);
+        matrixAnalysisWorker.runAnalysis();
+        if (matrixAnalysisWorker.countResult() == correctAnswersAdditional[curTest])
+        {
+            std::cout << "Additional test on grammar " << test.first << " " << test.second << " passed"
+                      << std::endl;
+            ++ passedTestCount;
+        }
+        else
+        {
+            std::cout
+                    << "Additional test on grammar " << test.first << " " << test.second << " failed!"
+                    << std::endl;
+            exit(1);
+        }
+
+        ++ curTest;
     }
 
     auto end_time = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
     std::cout << "Time: " << duration.count() << " sec\n";
-    std::cout << "Passed " << passedTestCount << '/' << NUM_OF_TESTS * NUM_OF_GRAMMARS  + 1 << std::endl;
+    std::cout << "Passed " << passedTestCount << '/'
+              << NUM_OF_TESTS * NUM_OF_GRAMMARS + additionalTests.size() << std::endl;
     return 0;
 }
