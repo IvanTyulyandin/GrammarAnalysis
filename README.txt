@@ -21,7 +21,7 @@ Each type of analysis (matrix, bottom up and GLL) contains Runner and Test.
 
 How to use Runner (for example, matrixAnalysisRunner):
     cd matrixAnalysis
-    ./matrixAnalysisRunner ChomskyFormGrammar DeterministicFiniteAutomata
+    ./matrixAnalysisRunner ChomskyFormGrammar DeterministicFiniteAutomata (optional: output file)
 
     Examples of DeterministicFiniteAutomata are in folder testDFA
     Examples of ChomskyFormGrammar are in folder testGrammars

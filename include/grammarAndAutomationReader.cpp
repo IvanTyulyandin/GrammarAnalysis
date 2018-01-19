@@ -203,6 +203,7 @@ void recursiveFiniteAutomationReader(const std::string &fileName,
     {
         if (curString.empty())
         {
+            std::getline(fileStream, curString);
             continue;
         }
 
@@ -266,6 +267,10 @@ void recursiveFiniteAutomationReader(const std::string &fileName,
 
     do
     {
+        if (curString.empty())
+        {
+            continue;
+        }
         if (!std::regex_search(curString, closingBracket))
         {
             if (std::regex_search(curString, res, automationRule))

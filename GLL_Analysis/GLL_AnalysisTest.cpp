@@ -35,7 +35,8 @@ int main() {
     for (int i = 0; i < NUM_OF_GRAMMARS; i++) {
         for (int j = 0; j < NUM_OF_TESTS; j++) {
             GLL_Analysis gll_analysisWorker(test_grammars[i], testData[j]);
-            std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
+            std::cout << "Running test: GLL analysis, DFA " + testData[j] + ", RFA " + test_grammars[i] + "..."
+                      << std::endl;
             gll_analysisWorker.runAnalysis();
             int res = gll_analysisWorker.countResult();
             if (res != correctAnswers[i][j])

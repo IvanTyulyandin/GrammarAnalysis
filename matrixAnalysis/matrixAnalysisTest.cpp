@@ -39,7 +39,8 @@ int main()
         for (int j = 0; j < NUM_OF_TESTS; j ++)
         {
             MatrixAnalysis testMatrix(test_grammars[i], testData[j]);
-            std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
+            std::cout << "Running test: matrix analysis, DFA " + testData[j] + ", grammar " + test_grammars[i] + "..."
+                      << std::endl;
             testMatrix.runAnalysis();
             int res = testMatrix.countResult();
             if (res != correctAnswers[i][j])

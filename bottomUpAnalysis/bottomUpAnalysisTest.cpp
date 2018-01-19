@@ -39,7 +39,8 @@ int main()
         for (int j = 0; j < NUM_OF_TESTS; j ++)
         {
             BottomUpAnalysis bottomUpAnalysisWorker(test_grammars[i], testData[j]);
-            std::cout << "Running test " + testData[j] + " on grammar " + test_grammars[i] + "..." << std::endl;
+            std::cout << "Running test: bottom up analysis, DFA " + testData[j] + ", RFA " + test_grammars[i] + "..."
+                      << std::endl;
             bottomUpAnalysisWorker.runAnalysis();
             int res = bottomUpAnalysisWorker.countResult();
             if (res != correctAnswers[i][j])
